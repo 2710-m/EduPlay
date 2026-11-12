@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}EDUPLAY{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+  <script src="{{ url_for('static', filename='js/funciones.js') }}" defer></script>
+</head>
+<body>
+  <header class="barra">
+    <a class="marca" href="{{ url_for('inicio') }}">EDU<span>PLAY</span></a>
+    <nav>
+      <a href="{{ url_for('inicio') }}">Inicio</a>
+      {% if session.get('usuario_id') %}
+        <a href="{{ url_for('panel') }}">Mi progreso</a>
+        <a href="{{ url_for('lectura') }}">Lectura</a>
+        <a href="{{ url_for('matematicas') }}">Matemáticas</a>
+        <a class="boton-nav" href="{{ url_for('salir') }}">Cerrar sesión</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Iniciar sesión</a>
+        <a class="boton-nav" href="{{ url_for('registro') }}">Crear cuenta</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% if mensajes %}
+      <section class="mensajes">
+        {% for categoria, mensaje in mensajes %}
+          <p class="mensaje {{ categoria }}">{{ mensaje }}</p>
+        {% endfor %}
+      </section>
+    {% endif %}
+  {% endwith %}
+
+  <main class="contenedor">
+    {% block content %}{% endblock %}
+  </main>
+  <footer>EDUPLAY · Aprende a tu ritmo</footer>
+</body>
+</html>

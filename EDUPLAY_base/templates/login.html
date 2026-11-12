@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión | EDUPLAY{% endblock %}
+{% block content %}
+<section class="formulario tarjeta">
+  <p class="etiqueta">QUÉ BUENO VERTE</p><h1>Inicia sesión</h1>
+  <p>Entra para continuar con tus actividades.</p>
+  <form method="post">
+    <label for="email">Correo electrónico</label>
+    <input id="email" name="email" type="email" required autocomplete="email">
+    <label for="password">Contraseña</label>
+    <input id="password" name="password" type="password" required autocomplete="current-password">
+    <button class="boton" type="submit">Entrar</button>
+  </form>
+  <p>¿No tienes cuenta? <a href="{{ url_for('registro') }}">Regístrate aquí</a>.</p>
+</section>
+{% endblock %}

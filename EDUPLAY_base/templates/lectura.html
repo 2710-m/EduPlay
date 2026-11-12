@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Lectura | EDUPLAY{% endblock %}
+{% block content %}
+<section class="encabezado-pagina">
+  <p class="etiqueta">ACTIVIDAD 01</p><h1>Comprensión lectora</h1>
+  <p>Lee con atención el texto y después contesta las preguntas.</p>
+</section>
+<article class="lectura-texto tarjeta">
+  <h2>El huerto de la escuela</h2>
+  <p>Un lunes, el grupo de Ana decidió crear un pequeño huerto en el patio de la escuela. Primero limpiaron la tierra y después sembraron tomates, lechugas y zanahorias. Cada equipo recibió una tarea: regar las plantas, quitar las hierbas y observar su crecimiento. Después de varias semanas, aparecieron los primeros brotes. El grupo comprendió que las plantas necesitan agua, luz y cuidados constantes. Al final, compartieron la cosecha y decidieron mantener el huerto durante todo el año.</p>
+</article>
+<form class="quiz tarjeta" data-materia="Lectura">
+  <fieldset><legend>1. ¿Qué decidieron crear los estudiantes?</legend>
+    <label class="opcion"><input type="radio" name="p1" value="a" required> Un huerto escolar</label>
+    <label class="opcion"><input type="radio" name="p1" value="b"> Una biblioteca nueva</label>
+    <label class="opcion"><input type="radio" name="p1" value="c"> Una cancha deportiva</label>
+    <small class="retroalimentacion" data-feedback="p1"></small>
+  </fieldset>
+  <fieldset><legend>2. ¿Qué necesitan las plantas para crecer según el texto?</legend>
+    <label class="opcion"><input type="radio" name="p2" value="a" required> Solo tierra seca</label>
+    <label class="opcion"><input type="radio" name="p2" value="b"> Agua, luz y cuidados</label>
+    <label class="opcion"><input type="radio" name="p2" value="c"> Únicamente fertilizante</label>
+    <small class="retroalimentacion" data-feedback="p2"></small>
+  </fieldset>
+  <fieldset><legend>3. ¿Cuál es la idea principal del texto?</legend>
+    <label class="opcion"><input type="radio" name="p3" value="a" required> Cómo cuidar y trabajar juntos en un huerto</label>
+    <label class="opcion"><input type="radio" name="p3" value="b"> Cómo preparar una carrera</label>
+    <label class="opcion"><input type="radio" name="p3" value="c"> Por qué cerrar la escuela</label>
+    <small class="retroalimentacion" data-feedback="p3"></small>
+  </fieldset>
+  <button class="boton" type="submit">Revisar respuestas</button>
+  <p class="resultado-quiz" aria-live="polite"></p>
+</form>
+{% endblock %}

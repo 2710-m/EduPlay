@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Mi progreso | EDUPLAY{% endblock %}
+{% block content %}
+<section class="encabezado-pagina">
+  <p class="etiqueta">TU ESPACIO DE APRENDIZAJE</p>
+  <h1>¡Hola, {{ session.get('nombre', 'estudiante') }}!</h1>
+  <p>Elige una práctica o revisa tus resultados recientes.</p>
+</section>
+<div class="tarjetas">
+  <article class="tarjeta"><div class="icono">📚</div><h2>Lectura</h2><p>Practica la comprensión lectora.</p><a class="boton" href="{{ url_for('lectura') }}">Empezar</a></article>
+  <article class="tarjeta"><div class="icono">➕</div><h2>Matemáticas</h2><p>Refuerza las operaciones básicas.</p><a class="boton" href="{{ url_for('matematicas') }}">Empezar</a></article>
+</div>
+<section class="seccion">
+  <h2>Resultados recientes</h2>
+  {% if resultados %}
+  <div class="tabla-contenedor"><table><thead><tr><th>Materia</th><th>Resultado</th><th>Fecha</th></tr></thead><tbody>
+  {% for r in resultados %}<tr><td>{{ r['materia'] }}</td><td>{{ r['correctas'] }} de {{ r['total'] }}</td><td>{{ r['fecha'] }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<p class="vacio">Todavía no hay resultados. ¡Haz tu primera actividad!</p>{% endif %}
+</section>
+{% endblock %}

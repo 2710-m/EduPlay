@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Matemáticas | EDUPLAY{% endblock %}
+{% block content %}
+<section class="encabezado-pagina">
+  <p class="etiqueta">ACTIVIDAD 02</p><h1>Matemáticas básicas</h1>
+  <p>Resuelve las operaciones y revisa tus respuestas.</p>
+</section>
+<form class="quiz tarjeta" data-materia="Matemáticas">
+  <fieldset><legend>1. ¿Cuánto es 8 + 7?</legend>
+    <label class="opcion"><input type="radio" name="p1" value="a" required> 14</label>
+    <label class="opcion"><input type="radio" name="p1" value="b"> 15</label>
+    <label class="opcion"><input type="radio" name="p1" value="c"> 16</label>
+    <small class="retroalimentacion" data-feedback="p1"></small>
+  </fieldset>
+  <fieldset><legend>2. ¿Cuánto es 6 × 4?</legend>
+    <label class="opcion"><input type="radio" name="p2" value="a" required> 20</label>
+    <label class="opcion"><input type="radio" name="p2" value="b"> 24</label>
+    <label class="opcion"><input type="radio" name="p2" value="c"> 28</label>
+    <small class="retroalimentacion" data-feedback="p2"></small>
+  </fieldset>
+  <fieldset><legend>3. ¿Cuánto es 20 − 9?</legend>
+    <label class="opcion"><input type="radio" name="p3" value="a" required> 9</label>
+    <label class="opcion"><input type="radio" name="p3" value="b"> 10</label>
+    <label class="opcion"><input type="radio" name="p3" value="c"> 11</label>
+    <small class="retroalimentacion" data-feedback="p3"></small>
+  </fieldset>
+  <button class="boton" type="submit">Revisar respuestas</button>
+  <p class="resultado-quiz" aria-live="polite"></p>
+</form>
+{% endblock %}

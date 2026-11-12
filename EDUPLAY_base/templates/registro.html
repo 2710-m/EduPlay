@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Crear cuenta | EDUPLAY{% endblock %}
+{% block content %}
+<section class="formulario tarjeta">
+  <p class="etiqueta">ÚNETE A EDUPLAY</p><h1>Crea tu cuenta</h1>
+  <p>Regístrate para guardar tus resultados de práctica.</p>
+  <form method="post">
+    <label for="nombre">Nombre</label>
+    <input id="nombre" name="nombre" required maxlength="80" autocomplete="name">
+    <label for="email">Correo electrónico</label>
+    <input id="email" name="email" type="email" required autocomplete="email">
+    <label for="password">Contraseña (mínimo 8 caracteres)</label>
+    <input id="password" name="password" type="password" minlength="8" required autocomplete="new-password">
+    <button class="boton" type="submit">Crear cuenta</button>
+  </form>
+  <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>.</p>
+</section>
+{% endblock %}
