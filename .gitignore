@@ -4,3 +4,4 @@ _pycache_/
 *.pyc
 .env
 instance/
+eduplay.db

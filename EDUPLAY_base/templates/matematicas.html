@@ -1,30 +1,361 @@
+```html
 {% extends "base.html" %}
 {% block title %}Matemáticas | EDUPLAY{% endblock %}
+
 {% block content %}
+
 <section class="encabezado-pagina">
-  <p class="etiqueta">ACTIVIDAD 02</p><h1>Matemáticas básicas</h1>
-  <p>Resuelve las operaciones y revisa tus respuestas.</p>
+    <p class="etiqueta">ACTIVIDAD 02 | NIVEL PREPARATORIA</p>
+    <h1>Razonamiento matemático</h1>
+    <p>Demuestra tus conocimientos resolviendo estos desafíos matemáticos.</p>
 </section>
-<form class="quiz tarjeta" data-materia="Matemáticas">
-  <fieldset><legend>1. ¿Cuánto es 8 + 7?</legend>
-    <label class="opcion"><input type="radio" name="p1" value="a" required> 14</label>
-    <label class="opcion"><input type="radio" name="p1" value="b"> 15</label>
-    <label class="opcion"><input type="radio" name="p1" value="c"> 16</label>
-    <small class="retroalimentacion" data-feedback="p1"></small>
-  </fieldset>
-  <fieldset><legend>2. ¿Cuánto es 6 × 4?</legend>
-    <label class="opcion"><input type="radio" name="p2" value="a" required> 20</label>
-    <label class="opcion"><input type="radio" name="p2" value="b"> 24</label>
-    <label class="opcion"><input type="radio" name="p2" value="c"> 28</label>
-    <small class="retroalimentacion" data-feedback="p2"></small>
-  </fieldset>
-  <fieldset><legend>3. ¿Cuánto es 20 − 9?</legend>
-    <label class="opcion"><input type="radio" name="p3" value="a" required> 9</label>
-    <label class="opcion"><input type="radio" name="p3" value="b"> 10</label>
-    <label class="opcion"><input type="radio" name="p3" value="c"> 11</label>
-    <small class="retroalimentacion" data-feedback="p3"></small>
-  </fieldset>
-  <button class="boton" type="submit">Revisar respuestas</button>
-  <p class="resultado-quiz" aria-live="polite"></p>
-</form>
+
+<div class="tarjeta quiz">
+
+    <div class="progreso-quiz">
+        <span id="numeroPregunta">Pregunta 1 de 20</span>
+        <span id="porcentaje">0%</span>
+    </div>
+
+    <div class="barra-progreso">
+        <div id="barra" class="barra-progreso-relleno"></div>
+    </div>
+
+    <form id="formularioQuiz">
+
+        <div id="preguntaContenedor"></div>
+
+        <div id="retroalimentacion" aria-live="polite"></div>
+
+        <button type="button" id="comprobar" class="boton">
+            Comprobar respuesta
+        </button>
+
+        <button type="button" id="siguiente" class="boton" hidden>
+            Siguiente pregunta
+        </button>
+
+    </form>
+
+    <div id="resultadoFinal" hidden></div>
+
+</div>
+
+<script>
+const preguntas = [
+
+{
+    pregunta: "1. Resuelve la ecuación: 3x + 7 = 25",
+    opciones: ["x = 5", "x = 6", "x = 7", "x = 8"],
+    correcta: 1,
+    explicacion: "Primero restamos 7 a ambos lados: 3x = 18. Después dividimos entre 3. Por eso x = 6."
+},
+
+{
+    pregunta: "2. ¿Cuál es el resultado de (5² + 3²) ÷ 2?",
+    opciones: ["15", "17", "20", "25"],
+    correcta: 1,
+    explicacion: "5² = 25 y 3² = 9. Sumamos 34 y dividimos entre 2. El resultado es 17."
+},
+
+{
+    pregunta: "3. Una chamarra cuesta $800 y tiene un descuento del 25%. ¿Cuánto pagarás?",
+    opciones: ["$500", "$550", "$600", "$650"],
+    correcta: 2,
+    explicacion: "El 25% de 800 es 200. Restamos 200 al precio original: 800 - 200 = 600."
+},
+
+{
+    pregunta: "4. Resuelve: 2(x - 3) = 14",
+    opciones: ["x = 7", "x = 8", "x = 10", "x = 12"],
+    correcta: 2,
+    explicacion: "Dividimos entre 2: x - 3 = 7. Sumamos 3 a ambos lados y obtenemos x = 10."
+},
+
+{
+    pregunta: "5. ¿Cuál es el resultado de √144 + √81?",
+    opciones: ["19", "20", "21", "22"],
+    correcta: 2,
+    explicacion: "La raíz cuadrada de 144 es 12 y la de 81 es 9. Sumamos 12 + 9 = 21."
+},
+
+{
+    pregunta: "6. Si f(x) = 2x² - 3, ¿cuánto vale f(4)?",
+    opciones: ["25", "27", "29", "32"],
+    correcta: 2,
+    explicacion: "Sustituimos x por 4: 2(4²) - 3 = 2(16) - 3 = 29."
+},
+
+{
+    pregunta: "7. ¿Cuál es el valor de x en la ecuación 5x - 10 = 3x + 8?",
+    opciones: ["7", "8", "9", "10"],
+    correcta: 2,
+    explicacion: "Restamos 3x: 2x - 10 = 8. Sumamos 10: 2x = 18. Dividimos entre 2: x = 9."
+},
+
+{
+    pregunta: "8. ¿Cuál es el área de un triángulo con base de 12 cm y altura de 8 cm?",
+    opciones: ["40 cm²", "44 cm²", "48 cm²", "56 cm²"],
+    correcta: 2,
+    explicacion: "El área es (base × altura) / 2. Entonces (12 × 8) / 2 = 48 cm²."
+},
+
+{
+    pregunta: "9. ¿Cuál es el siguiente número de la sucesión: 3, 9, 27, 81...?",
+    opciones: ["162", "189", "243", "324"],
+    correcta: 2,
+    explicacion: "Cada término se multiplica por 3. Entonces 81 × 3 = 243."
+},
+
+{
+    pregunta: "10. Si 4 cuadernos cuestan $72, ¿cuánto cuestan 7 cuadernos al mismo precio?",
+    opciones: ["$112", "$119", "$126", "$132"],
+    correcta: 2,
+    explicacion: "Cada cuaderno cuesta 72 / 4 = 18 pesos. Multiplicamos 18 × 7 = 126."
+},
+
+{
+    pregunta: "11. ¿Cuál es el resultado de 2³ × 2⁴?",
+    opciones: ["32", "64", "128", "256"],
+    correcta: 2,
+    explicacion: "Al multiplicar potencias con la misma base, sumamos exponentes: 2³ × 2⁴ = 2⁷ = 128."
+},
+
+{
+    pregunta: "12. ¿Cuál es la probabilidad de obtener un número par al lanzar un dado normal?",
+    opciones: ["1/6", "1/3", "1/2", "2/3"],
+    correcta: 2,
+    explicacion: "Los resultados pares son 2, 4 y 6. Hay 3 resultados favorables de 6 posibles: 3/6 = 1/2."
+},
+
+{
+    pregunta: "13. Resuelve el sistema: x + y = 10; x - y = 4. ¿Cuánto vale x?",
+    opciones: ["5", "6", "7", "8"],
+    correcta: 2,
+    explicacion: "Sumamos ambas ecuaciones: 2x = 14. Dividimos entre 2 y obtenemos x = 7."
+},
+
+{
+    pregunta: "14. ¿Cuál es la pendiente de la recta que pasa por (2,3) y (4,7)?",
+    opciones: ["1", "2", "3", "4"],
+    correcta: 1,
+    explicacion: "La pendiente es (7 - 3) / (4 - 2) = 4/2 = 2."
+},
+
+{
+    pregunta: "15. ¿Cuánto es el 15% de 240?",
+    opciones: ["24", "30", "36", "40"],
+    correcta: 2,
+    explicacion: "Multiplicamos 240 × 0.15 = 36."
+},
+
+{
+    pregunta: "16. ¿Cuál es el resultado de (3/4) + (2/3)?",
+    opciones: ["5/7", "13/12", "17/12", "7/12"],
+    correcta: 2,
+    explicacion: "El mínimo común denominador es 12. Convertimos: 9/12 + 8/12 = 17/12."
+},
+
+{
+    pregunta: "17. Un automóvil recorre 180 km en 3 horas. ¿Cuál es su velocidad promedio?",
+    opciones: ["50 km/h", "55 km/h", "60 km/h", "65 km/h"],
+    correcta: 2,
+    explicacion: "La velocidad es distancia entre tiempo: 180 / 3 = 60 km/h."
+},
+
+{
+    pregunta: "18. ¿Cuál es la solución positiva de x² - 49 = 0?",
+    opciones: ["5", "6", "7", "8"],
+    correcta: 2,
+    explicacion: "Sumamos 49: x² = 49. Al sacar raíz cuadrada obtenemos x = ±7. La solución positiva es 7."
+},
+
+{
+    pregunta: "19. ¿Cuál es el volumen de un cubo cuyos lados miden 5 cm?",
+    opciones: ["25 cm³", "75 cm³", "100 cm³", "125 cm³"],
+    correcta: 3,
+    explicacion: "El volumen de un cubo es lado × lado × lado: 5 × 5 × 5 = 125 cm³."
+},
+
+{
+    pregunta: "20. Si el promedio de 6, 8, 10 y x es 9, ¿cuánto vale x?",
+    opciones: ["10", "11", "12", "13"],
+    correcta: 2,
+    explicacion: "El promedio es la suma dividida entre 4. Entonces (6 + 8 + 10 + x) / 4 = 9. La suma debe ser 36, por lo tanto x = 12."
+}
+
+];
+
+let actual = 0;
+let aciertos = 0;
+let respondida = false;
+
+const contenedor = document.getElementById("preguntaContenedor");
+const comprobar = document.getElementById("comprobar");
+const siguiente = document.getElementById("siguiente");
+const retroalimentacion = document.getElementById("retroalimentacion");
+
+function mostrarPregunta() {
+
+    respondida = false;
+
+    const p = preguntas[actual];
+
+    document.getElementById("numeroPregunta").textContent =
+        `Pregunta ${actual + 1} de ${preguntas.length}`;
+
+    const progreso = (actual / preguntas.length) * 100;
+
+    document.getElementById("porcentaje").textContent =
+        Math.round(progreso) + "%";
+
+    document.getElementById("barra").style.width =
+        progreso + "%";
+
+    contenedor.innerHTML = `
+        <fieldset>
+            <legend>${p.pregunta}</legend>
+
+            ${p.opciones.map((opcion, i) => `
+                <label class="opcion">
+                    <input type="radio" name="respuesta" value="${i}">
+                    ${opcion}
+                </label>
+            `).join("")}
+
+        </fieldset>
+    `;
+
+    retroalimentacion.innerHTML = "";
+    comprobar.hidden = false;
+    siguiente.hidden = true;
+}
+
+comprobar.addEventListener("click", () => {
+
+    if (respondida) return;
+
+    const seleccion = document.querySelector(
+        'input[name="respuesta"]:checked'
+    );
+
+    if (!seleccion) {
+        retroalimentacion.innerHTML =
+            "<p>⚠️ Selecciona una respuesta antes de continuar.</p>";
+        return;
+    }
+
+    respondida = true;
+
+    const respuesta = Number(seleccion.value);
+    const p = preguntas[actual];
+
+    document.querySelectorAll(
+        'input[name="respuesta"]'
+    ).forEach(input => input.disabled = true);
+
+    if (respuesta === p.correcta) {
+
+        aciertos++;
+
+        retroalimentacion.innerHTML = `
+            <div class="mensaje-correcto">
+                ✅ ¡Respuesta correcta!
+                <p>${p.explicacion}</p>
+            </div>
+        `;
+
+    } else {
+
+        retroalimentacion.innerHTML = `
+            <div class="mensaje-error">
+                ❌ Respuesta incorrecta.
+                <p><strong>Respuesta correcta:</strong>
+                ${p.opciones[p.correcta]}</p>
+                <p><strong>Explicación:</strong>
+                ${p.explicacion}</p>
+            </div>
+        `;
+
+    }
+
+    comprobar.hidden = true;
+    siguiente.hidden = false;
+
+    siguiente.textContent =
+        actual === preguntas.length - 1
+        ? "Ver resultados"
+        : "Siguiente pregunta";
+
+});
+
+siguiente.addEventListener("click", () => {
+
+    actual++;
+
+    if (actual < preguntas.length) {
+
+        mostrarPregunta();
+
+    } else {
+
+        mostrarResultado();
+
+    }
+
+});
+
+function mostrarResultado() {
+
+    contenedor.hidden = true;
+    siguiente.hidden = true;
+    comprobar.hidden = true;
+    retroalimentacion.hidden = true;
+
+    document.getElementById("numeroPregunta").textContent =
+        "Actividad terminada";
+
+    document.getElementById("porcentaje").textContent = "100%";
+
+    document.getElementById("barra").style.width = "100%";
+
+    const porcentaje = Math.round(
+        (aciertos / preguntas.length) * 100
+    );
+
+    const resultado = document.getElementById("resultadoFinal");
+
+    resultado.hidden = false;
+
+    resultado.innerHTML = `
+        <h2>¡Actividad completada!</h2>
+
+        <h1>${porcentaje}%</h1>
+
+        <p>Obtuviste ${aciertos} respuestas correctas
+        de ${preguntas.length} preguntas.</p>
+
+        <p>
+            ${
+                porcentaje >= 90
+                ? "🏆 ¡Excelente! Dominas muy bien estos temas."
+                : porcentaje >= 70
+                ? "👏 ¡Muy buen trabajo! Sigue practicando."
+                : porcentaje >= 50
+                ? "📚 Vas por buen camino. Repasa los procedimientos."
+                : "💡 No te rindas. Repasa las explicaciones e inténtalo nuevamente."
+            }
+        </p>
+
+        <button class="boton" onclick="location.reload()">
+            Volver a intentar
+        </button>
+    `;
+
+}
+
+mostrarPregunta();
+</script>
+
 {% endblock %}
+```

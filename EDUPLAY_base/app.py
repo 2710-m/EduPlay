@@ -40,7 +40,7 @@ def inicializar_bd():
 
 def requiere_sesion(vista):
     @wraps(vista)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args,  **kwargs):
         if "usuario_id" not in session:
             flash("Inicia sesión para entrar a las actividades.", "info")
             return redirect(url_for("login"))

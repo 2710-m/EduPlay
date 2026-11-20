@@ -43,3 +43,36 @@ document.querySelectorAll(".quiz").forEach((formulario) => {
     }
   });
 });
+
+// AUDIO PARA LA LECTURA
+
+const botonReproducir = document.getElementById("reproducir");
+const botonPausar = document.getElementById("pausar");
+const botonDetener = document.getElementById("detener");
+
+if (botonReproducir) {
+    const lectura = document.querySelector(".lectura-texto");
+
+    botonReproducir.addEventListener("click", () => {
+        if (speechSynthesis.paused) {
+            speechSynthesis.resume();
+            return;
+        }
+
+        speechSynthesis.cancel();
+
+        const voz = new SpeechSynthesisUtterance(lectura.innerText);
+        voz.lang = "es-MX";
+        voz.rate = 1;
+
+        speechSynthesis.speak(voz);
+    });
+
+    botonPausar.addEventListener("click", () => {
+        speechSynthesis.pause();
+    });
+
+    botonDetener.addEventListener("click", () => {
+        speechSynthesis.cancel();
+    });
+}
